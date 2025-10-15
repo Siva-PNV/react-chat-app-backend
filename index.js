@@ -29,6 +29,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "https://personal-chat-appl.netlify.app",
+    // origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 });
@@ -57,7 +58,7 @@ io.on("connection", (socket) => {
     } catch (err) {
       console.error("Error saving message:", err);
     }
-    socket.to(data.room).emit("receive_message", data);
+  io.in(data.room).emit("receive_message", data);
   });
 
   socket.on("disconnect", () => {
